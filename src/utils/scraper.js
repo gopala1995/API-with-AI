@@ -7,7 +7,7 @@ async function scrapeReviews(url) {
 
     await page.goto(url, { waitUntil: 'networkidle0' });
 
-    // Use AI to dynamically identify review CSS selectors
+    
     const { reviewTitleSelector, reviewBodySelector, reviewRatingSelector, reviewerNameSelector, paginationSelector } = await aiHelper.getReviewSelectors(url);
 
     let reviews = [];
@@ -15,7 +15,7 @@ async function scrapeReviews(url) {
     let nextPageExists = true;
 
     while (nextPageExists) {
-        // Extract reviews on the current page
+        
         const currentReviews = await page.evaluate((reviewTitleSelector, reviewBodySelector, reviewRatingSelector, reviewerNameSelector) => {
             const reviewElements = document.querySelectorAll(reviewTitleSelector);
             return Array.from(reviewElements).map((_, index) => ({
@@ -29,11 +29,11 @@ async function scrapeReviews(url) {
         reviews = reviews.concat(currentReviews);
         reviewsCount += currentReviews.length;
 
-        // Check if there's a next page button and click it
+
         const nextPageButton = await page.$(paginationSelector);
         if (nextPageButton) {
             await nextPageButton.click();
-            await page.waitForTimeout(1000);  // Give the page time to load
+            await page.waitForTimeout(1000);  
         } else {
             nextPageExists = false;
         }

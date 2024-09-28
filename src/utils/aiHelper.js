@@ -20,7 +20,7 @@ async function getReviewSelectors(url) {
         max_tokens: 100,
     });
 
-    // Parse the AI's response to extract selectors
+    
     const selectors = JSON.parse(response.data.choices[0].text);
     
     return {
